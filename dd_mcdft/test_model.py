@@ -6,8 +6,9 @@ import time
 
 
 class ML_tester:
-    def __init__(self, trainer, out_filename, algo):
+    def __init__(self, trainer, out_filename, algo, neg_cutoff):
         self.trainer = trainer
+        self.neg_cutoff=neg_cutoff
         self.out_file = FileIO(out_filename)
         self.algo = algo
 
@@ -16,7 +17,7 @@ class ML_tester:
             t1 = time.time()
             new_cluster = self.trainer.all_clusters[i]
             pred_E, neg_score = predict_energy(
-                self.trainer, new_cluster, algo=self.algo
+                self.trainer, new_cluster,self.neg_cutoff, algo=self.algo
             )
             real_E = self.trainer.all_energy[i]
 

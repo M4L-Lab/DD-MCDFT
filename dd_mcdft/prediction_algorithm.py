@@ -1,7 +1,7 @@
 import numpy as np
 
 
-def predict_energy_closest(trainer, new_cluster):
+def predict_energy_closest(trainer, new_cluster,neg_cutoff):
     new_cluster = new_cluster.reshape(1, -1)
     new_dX_p = trainer.training_clusters - new_cluster
     new_dX_n = new_cluster - trainer.training_clusters
@@ -11,7 +11,7 @@ def predict_energy_closest(trainer, new_cluster):
     pos_score = trainer.lof_model.score_samples(new_dX_p)
     min_idx = trainer.closest_to_neg_one(neg_score)
 
-    if (min_idx is None) or (np.abs(neg_score[min_idx]) > np.abs(trainer.neg_cutoff)):
+    if (min_idx is None) or (np.abs(neg_score[min_idx]) > np.abs(neg_cutoff)):
         return None, neg_score[min_idx]
 
     else:
@@ -21,7 +21,7 @@ def predict_energy_closest(trainer, new_cluster):
         return pred_E, neg_score[min_idx]
 
 
-def predict_energy_min(trainer, new_cluster):
+def predict_energy_min(trainer, new_cluster,neg_cutoff):
     new_cluster = new_cluster.reshape(1, -1)
     new_dX_p = trainer.training_clusters - new_cluster
     new_dX_n = new_cluster - trainer.training_clusters
@@ -36,7 +36,7 @@ def predict_energy_min(trainer, new_cluster):
     avg_score = (min_neg_score + min_pos_score) / 2.0
 
     print(min_neg_score)
-    if min_neg_score < trainer.neg_cutoff:
+    if min_neg_score < neg_cutoff:
         return None, avg_score
 
     else:
@@ -46,7 +46,7 @@ def predict_energy_min(trainer, new_cluster):
         return pred_E, avg_score
 
 
-def predict_energy_std(trainer, new_cluster):
+def predict_energy_std(trainer, new_cluster,neg_cutoff):
     new_cluster = new_cluster.reshape(1, -1)
     new_dX_p = trainer.training_clusters - new_cluster
     new_dX_n = new_cluster - trainer.training_clusters
@@ -57,7 +57,7 @@ def predict_energy_std(trainer, new_cluster):
     diff = np.abs(max_neg_score - min_neg_score)
 
     print(f"min: {min_neg_score:.3f} max:{max_neg_score:.3f} diff:{diff:.3f}")
-    if diff > 0.6 or min_neg_score < trainer.neg_cutoff:
+    if diff > 0.6 or min_neg_score < neg_cutoff:
         return None, diff
 
     else:
@@ -68,14 +68,14 @@ def predict_energy_std(trainer, new_cluster):
         return pred_E, diff
 
 
-def predict_energy_closest_average(trainer, new_cluster):
+def predict_energy_closest_average(trainer, new_cluster,neg_cutoff):
     new_cluster = new_cluster.reshape(1, -1)
     new_dX_p = trainer.training_clusters - new_cluster
     new_dX_n = new_cluster - trainer.training_clusters
     neg_score = trainer.lof_model.score_samples(new_dX_n)
     min_neg_score = np.min(neg_score)
 
-    if min_neg_score < trainer.neg_cutoff:
+    if min_neg_score < neg_cutoff:
         return None, min_neg_score
     else:
         pred_E_p_all = trainer.training_energy - trainer.ml_model.predict(new_dX_p)
@@ -101,14 +101,14 @@ def predict_energy_closest_average(trainer, new_cluster):
         return final_avg, min_neg_score
 
 
-def predict_energy(trainer, new_cluster, algo):
+def predict_energy(trainer, new_cluster,neg_cutoff, algo):
     if algo == "min":
-        return predict_energy_min(trainer, new_cluster)
+        return predict_energy_min(trainer, new_cluster, neg_cutoff)
     elif algo == "closest":
-        return predict_energy_closest(trainer, new_cluster)
+        return predict_energy_closest(trainer, new_cluster,neg_cutoff)
     elif algo == "closest_average":
-        return predict_energy_closest_average(trainer, new_cluster)
+        return predict_energy_closest_average(trainer, new_cluster,neg_cutoff)
     elif algo == "std":
-        return predict_energy_std(trainer, new_cluster)
+        return predict_energy_std(trainer, new_cluster,neg_cutoff)
     else:
         raise Exception("Unknown algo keyword")
