@@ -23,10 +23,7 @@ class ML_trainer:
         self.all_time = data[:, -1]
         self.training_clusters = data[: self.train_size, :-2]
         self.training_energy = data[: self.train_size, -2]
-        print(self.all_clusters.shape)
-        print(self.all_energy.shape)
-        print(self.training_clusters.shape)
-        print(self.training_energy.shape)
+
 
     def get_training_data(self):
         dX_train = []
@@ -64,4 +61,4 @@ class ML_trainer:
         self.lof_model.fit(-1 * new_dX)
         self.training_clusters = np.append(self.training_clusters, new_cluster, axis=0)
         self.training_energy = np.append(self.training_energy, new_energy, axis=0)
-        print(f"Refitted Model. train size : {self.training_energy.shape}")
+        #print(f"Refitted Model. train size : {self.training_energy.shape}")
