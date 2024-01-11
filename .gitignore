@@ -2,12 +2,16 @@
 .devcontainer/
 dd_mcdft.egg-info/
 dd_mcdft/__pycache__/
+<<<<<<< HEAD
 dd_mcdft.egg-info/
 .devcontainer/
 publication_data/
+=======
+>>>>>>> 50b1c30 (update gitignore to include publication_data)
 *.pyc
 *.pyo
 *.pyd
+*.dat
 
 # Environment-specific settings
 .env
