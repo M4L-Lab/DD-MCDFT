@@ -29,5 +29,5 @@ class ML_tester:
                 delta_time = time.time() - t1
                 err = real_E - pred_E
                 msg = f"{i:5} {neg_score:10.5f} {real_E:10.5f} {pred_E:10.5f} {err:10.5f} 0 {delta_time:20.3f}"
-            print(msg)
+            #print(msg)
             self.out_file.write_formatted_message(msg)
