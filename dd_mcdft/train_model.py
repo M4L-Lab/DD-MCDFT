@@ -8,6 +8,7 @@ class ML_trainer:
     and save the model"""
 
     def __init__(self, train_size, csv_file, neg_cutoff):
+        print("This is train_x branch")
         self.csv_file = csv_file
         self.train_size = train_size
         self.lof_model = LocalOutlierFactor(n_neighbors=5, novelty=True)
