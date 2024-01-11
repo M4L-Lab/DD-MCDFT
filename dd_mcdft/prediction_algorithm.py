@@ -2,7 +2,6 @@ import numpy as np
 
 
 def predict_energy_closest(trainer, new_cluster):
-    print("closest")
     new_cluster = new_cluster.reshape(1, -1)
     new_dX_p = trainer.training_clusters - new_cluster
     new_dX_n = new_cluster - trainer.training_clusters
