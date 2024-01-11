@@ -7,13 +7,11 @@ class ML_trainer:
     """Read csv file, make dataset from based on train_size
     and save the model"""
 
-    def __init__(self, train_size, csv_file, neg_cutoff):
-        print("This is train_x branch")
+    def __init__(self, train_size, csv_file):
         self.csv_file = csv_file
         self.train_size = train_size
         self.lof_model = LocalOutlierFactor(n_neighbors=5, novelty=True)
         self.ml_model = Ridge(alpha=0.001)
-        self.neg_cutoff = neg_cutoff
         self.training_atoms_idx = []
         self._get_data_from_csv()
         self.get_training_data()
