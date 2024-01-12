@@ -43,12 +43,12 @@ def extract_data_summery(filename, train_size, neg_cutoff, training_csv_filename
     time_saved = get_times(data, train_size, training_csv_filename)
 
     max_error = np.max(data_clean[:, 2] - data_clean[:, 3])
-    prop_dict["train_size"] = train_size
+    prop_dict["train_size"] = int(train_size)
     prop_dict["neg_score_cutoff"] = neg_cutoff
-    prop_dict["extra_dft"] = extra_dft
-    prop_dict["r2"] = r2
-    prop_dict["rmse"] = rmse
-    prop_dict["bias_factor"] = bias_factor
-    prop_dict["max_error"] = max_error
-    prop_dict["time_saved"] = time_saved
+    prop_dict["extra_dft"] = int(extra_dft)
+    prop_dict["r2"] = round(r2,4)
+    prop_dict["rmse"] = round(rmse,4)
+    prop_dict["bias_factor"] = round(bias_factor,4)
+    prop_dict["max_error"] = round(max_error,4)
+    prop_dict["time_saved"] = round(time_saved,4)
     return prop_dict
