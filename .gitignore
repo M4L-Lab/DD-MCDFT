@@ -1,4 +1,6 @@
 # Byte-compiled / optimized Python files
+.devcontainer/
+dd_mcdft.egg-info/
 dd_mcdft/__pycache__/
 dd_mcdft.egg-info/
 .devcontainer/
