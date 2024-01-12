@@ -35,7 +35,6 @@ def predict_energy_min(trainer, new_cluster,neg_cutoff):
     min_pos_score = pos_score[pos_min_idx]
     avg_score = (min_neg_score + min_pos_score) / 2.0
 
-    print(min_neg_score)
     if min_neg_score < neg_cutoff:
         return None, avg_score
 

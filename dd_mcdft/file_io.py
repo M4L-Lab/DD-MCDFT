@@ -10,7 +10,7 @@ class FileIO:
         if os.path.exists(self.filename):
             # Delete the file if it exists
             os.remove(self.filename)
-        print("File I/O initialized.")
+        #print("File I/O initialized.")
 
     def write_formatted_message(self, message):
         try:
