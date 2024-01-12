@@ -37,7 +37,7 @@ class ML_trainer:
         self.dY_train = np.array(dY_train)
 
     def train_model(self):
-        
+
         if self.train_dx:
             self.lof_model.fit(self.dX_train)
         else:
@@ -68,3 +68,16 @@ class ML_trainer:
         self.training_clusters = np.append(self.training_clusters, new_cluster, axis=0)
         self.training_energy = np.append(self.training_energy, new_energy, axis=0)
         #print(f"Refitted Model. train size : {self.training_energy.shape}")
+
+    def refit_x(self, new_cluster, new_energy):
+        new_cluster = new_cluster.reshape(1, -1)
+        new_energy = np.array([new_energy])
+        new_dX = self.training_clusters - new_cluster
+        new_dY = self.training_energy - new_energy
+        self.ml_model.fit(new_dX, new_dY)
+        self.ml_model.fit(-1 * new_dX, -1 * new_dY)
+        
+        self.training_clusters = np.append(self.training_clusters, new_cluster, axis=0)
+        self.training_energy = np.append(self.training_energy, new_energy, axis=0)
+        self.lof_model.fit(self.training_clusters)
+        
