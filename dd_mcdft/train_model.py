@@ -7,9 +7,10 @@ class ML_trainer:
     """Read csv file, make dataset from based on train_size
     and save the model"""
 
-    def __init__(self, train_size, csv_file):
+    def __init__(self, train_size, csv_file, train_dx=True):
         self.csv_file = csv_file
         self.train_size = train_size
+        self.train_dx=train_dx
         self.lof_model = LocalOutlierFactor(n_neighbors=5, novelty=True)
         self.ml_model = Ridge(alpha=0.001)
         self.training_atoms_idx = []
@@ -36,7 +37,12 @@ class ML_trainer:
         self.dY_train = np.array(dY_train)
 
     def train_model(self):
-        self.lof_model.fit(self.dX_train)
+        
+        if self.train_dx:
+            self.lof_model.fit(self.dX_train)
+        else:
+            self.lof_model.fit(self.training_clusters)
+
         self.ml_model.fit(self.dX_train, self.dY_train)
 
     def closest_to_neg_one(self, arr):
