@@ -1,0 +1,2 @@
+train_size,neg_score_cutoff,extra_dft,r2,rmse,bias_factor,max_error,time_saved,n_feature,train_dx,algo
+500,-2.5,13,0.9112,0.0916,-7.968,0.2597,573.8588,362,True,min

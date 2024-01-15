@@ -22,7 +22,7 @@ import json
 
 alloy = "HEA1"
 algo = "min"
-train_dx=False
+train_dx=True
 
 csv_file = f"./database/{alloy}_100k_non_seq1.csv"
 
@@ -47,8 +47,8 @@ train_sizes = [
 
 neg_cutoffs = [-3.5, -3.25, -3.0, -2.75, -2.5]
 
-train_sizes=[100]
-neg_cutoffs=[-1.3]
+train_sizes=[500]
+neg_cutoffs=[-2.5]
 
 # cluster_calculator = cluster_expansion(
 #     primitive_structure, cutoffs, chemical_symbols[alloy]
