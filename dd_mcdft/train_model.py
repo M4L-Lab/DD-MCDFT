@@ -30,7 +30,7 @@ class ML_trainer:
         dX_train = []
         dY_train = []
         for i in range(self.train_size):
-            for j in range(self.train_size):
+            for j in range(i,self.train_size):
                 dX_train.append(self.training_clusters[i] - self.training_clusters[j])
                 dY_train.append(self.training_energy[i] - self.training_energy[j])
         self.dX_train = np.array(dX_train)
@@ -62,11 +62,11 @@ class ML_trainer:
         new_dX = self.training_clusters - new_cluster
         new_dY = self.training_energy - new_energy
         self.ml_model.fit(new_dX, new_dY)
-        self.ml_model.fit(-1 * new_dX, -1 * new_dY)
+        #self.ml_model.fit(-1 * new_dX, -1 * new_dY)
         self.training_clusters = np.append(self.training_clusters, new_cluster, axis=0)
         self.training_energy = np.append(self.training_energy, new_energy, axis=0)
         if train_dx: 
             self.lof_model.fit(new_dX)
-            self.lof_model.fit(-1 * new_dX)
+            #self.lof_model.fit(-1 * new_dX)
         else:
             self.lof_model.fit(self.training_clusters)
